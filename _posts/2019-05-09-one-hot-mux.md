@@ -48,6 +48,8 @@ So, here's some straight forward code for a one-hot mux. Note: this is not optim
 This gives us what we want, so long the valid vector is one-hot. But this does not synthesize well! For a single bit of oh_data
 and an 8-wide mux we consume 6 LUTs, 2 deep on a LUT6 architecture:
 
+![Tech mapping for naive one-hot mux](/images/test_mux_1.png)
+
 And it doesn't scale well either:
 An 8-way mux consumes  6 LUTs, 2 deep.
 A 16-way mux consumes 17 LUTs, 3 deep. 
@@ -178,6 +180,8 @@ We can't use this directly if we don't have control over all of the devices, but
 Here we mask out each data bus with the corresponding valid signal before ORing the data together. For a 1-bit 8-way 
 mux we still need to look at 16 input bits (8x data and 8x valid), but this now decomposes into a well balanced logic 
 tree, and need only consume 3 LUTs, 2 deep on a LUT6 architecture:
+
+![Tech mapping for ideal one-hot mux](/images/test_mux_2.png)
 
 However, for some reason I don't understand, Vivado implements this instead using 5 LUT4s, 2 deep. It does this even 
 if I remove the loop and write out the full logic expression for an 8-way mux. I thought maybe Vivado was pushing for 
