@@ -1,6 +1,7 @@
 ---
 layout: post
 title: One-Hot Mux
+author: Andy Knowles
 description: Explore synthesis of a one-hot mux
 summary: Explore synthesis of a one-hot mux
 image: /images/test_mux_2.png
