@@ -49,9 +49,9 @@ and an 8-wide mux we consume 6 LUTs, 2 deep on a LUT6 architecture:
 ![Tech mapping for naive one-hot mux](/images/test_mux_1.png)
 
 And it doesn't scale well either:
-An 8-way mux consumes  6 LUTs, 2 deep.
-A 16-way mux consumes 17 LUTs, 3 deep. 
-A 64-way mux consumes 55 LUTs, 4 deep.
+* An 8-way mux consumes  6 LUTs, 2 deep.
+* A 16-way mux consumes 17 LUTs, 3 deep. 
+* A 64-way mux consumes 55 LUTs, 4 deep.
 
 What are we actually synthesizing? Let's unroll the loop for G_PORTS = 8:
 
