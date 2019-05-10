@@ -13,9 +13,6 @@ avatar: https://andy-knowles.github.io/images/avatar.jpg
 
 twitter_username: andypknowles
 github_username: andy-knowles
-minimal_mistakes_skin: default
-remote_theme: mmistakes/minimal-mistakes
-theme: minimal-mistakes-jekyll
 
 author:
   name   : "Andy Knowles"
@@ -37,17 +34,6 @@ footer-links:
   stackoverflow: # your stackoverflow profile, e.g. "users/50476/bart-kiers"
   youtube: # channel/<your_long_string> or user/<user-name>
   googleplus: # anything in your profile username that comes after plus.google.com/
-
-
-footer:
-  links:
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/andypknowles"
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/andy-knowles"
-
 
 # Enter your Disqus shortname (not your username) to enable commenting on posts
 # You can find your shortname on the Settings page of your Disqus account
@@ -91,6 +77,13 @@ sass:
 
 # Use the following plug-ins
 plugins:
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jemoji
+  - jekyll-include-cache
+
+gems:
   - jekyll-sitemap
   - jekyll-gist
   - jekyll-feed
