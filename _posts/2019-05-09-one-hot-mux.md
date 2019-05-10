@@ -1,9 +1,9 @@
 # One-hot Mux
 
-ZipCPU recently posted about working around some poor synthesis results for a kind of mux that I'm going to refer to as a one-hot mux. 
-A one-hot mux is where the control signal that selects which of the mux inputs to output is a one-hot vector of width equal to the
-number of mux ports. This is opposed to a normal mux where the control signal is a binary index selecting one of the ports, which I'm 
-going to call an indexed mux for the rest of this post.
+[ZipCPU](twitter.com/zipcpu) recently [posted](zipcpu.com/zipcpu/2019/03/28/return-decoding.html) about working around some poor synthesis
+results for a kind of mux that I'm going to refer to as a one-hot mux. A one-hot mux is where the control signal that selects which of the 
+mux inputs to output is a one-hot vector of width equal to the number of mux ports. This is opposed to a normal mux where the control signal
+is a binary index selecting one of the ports, which I'm going to call an indexed mux for the rest of this post.
 
 The post really got me curious, as I had some similar looking code open in my editor that day, and I didn't really think the performance
 of a one-hot mux would be that much worse than an indexed mux. So let's take a look!
