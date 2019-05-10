@@ -1,3 +1,10 @@
+---
+layout: post
+title: One-Hot Mux
+summary: Explore synthesis of a one-hot mux
+image: /images/test_mux_2.png
+---
+
 [ZipCPU](twitter.com/zipcpu) recently [posted](zipcpu.com/zipcpu/2019/03/28/return-decoding.html) about working around some poor synthesis
 results for a kind of mux that I'm going to refer to as a one-hot mux. A one-hot mux is where the control signal that selects which of the 
 mux inputs to output is a one-hot vector of width equal to the number of mux ports. This is opposed to a normal mux where the control signal
