@@ -3,7 +3,7 @@ layout: post
 title: One-Hot Mux
 author: Andy Knowles
 summary: Explore synthesis of a one-hot mux
-image: /images/onehot8_800.png
+image: /images/onehot8.png
 ---
 
 [ZipCPU](twitter.com/zipcpu) recently [posted](zipcpu.com/zipcpu/2019/03/28/return-decoding.html) about working around some poor synthesis
