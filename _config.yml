@@ -15,6 +15,7 @@ twitter_username: andypknowles
 github_username: andy-knowles
 minimal_mistakes_skin: default
 remote_theme: mmistakes/minimal-mistakes
+theme: minimal-mistakes-jekyll
 
 author:
   name   : "Andy Knowles"
