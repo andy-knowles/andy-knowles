@@ -179,7 +179,7 @@ We can't use this directly if we don't have control over all of the devices, but
 
 Here we mask out each data bus with the corresponding valid signal before ORing the data together. For a 1-bit 8-way 
 mux we still need to look at 16 input bits (8x data and 8x valid), but this now decomposes into a well balanced logic 
-tree, and need only consume 3 LUTs, 2 deep on a LUT6 architecture:
+tree, and ideally need only consume 3 LUTs, 2 deep on a LUT6 architecture:
 
 ![Tech mapping for ideal one-hot mux](/images/test_mux_2.png)
 
@@ -189,7 +189,9 @@ faster timing by using the O5 output from each LUT4, but a 16-way mux consumes 8
 be implemented as 7 LUTs, 2 deep, so timing can't be the reason. Then I thought maybe Vivado was trying to keep from
 losing too many flipflops, as maybe using a full LUT6 renders one of the flipflops inaccessible to other uses? But 
 while this was the case in 7-series FPGAs, the Ultrascale device I am targeting has dedicated inputs to both flipflops
-independent of how the LUT is used.
+independent of how the LUT is used. So I have no excuses for why Vivado is implementing it like this:
+
+![Tech mapping for Vivado's one-hot mux](/images/test_mux_3.png)
 
 ## The Automatic Way
 
@@ -227,8 +229,8 @@ If we synthesize this code as-is, we in fact get very good results. Here we actu
 2 deep, as we would get by hand-optimizing our previous code. If we look at the truth tables in the LUTs we actually 
 find the same logic has been inferred: an OR tree of (data AND valid). This is great!
 
-It also produces ideal logic for a 16-way mux, using 7 LUTs, 2 deep. But for a 64-way mux it consumes 35 LUTs, 4 deep,
-when it could be implemented in 26 LUTs, 3 deep.
+It also produces ideal logic for a 16-way mux, using 7 LUTs, 2 deep. Great! But for a 64-way mux it consumes 35 LUTs, 4 deep,
+when it could be implemented in 26 LUTs, 3 deep. Not so great.
 
 But this code isn't generic over the number of mux ports. So we try to make it so:
 
@@ -254,6 +256,8 @@ should only hit the true condition when valid is in fact one-hot, and otherwise 
 don't care. If we manually expand this to a chain of if-elses and then to a truth table case statement, we should end
 up with a generic version of the code we wrote above. I actually thought this was roughly how synthesis worked, and that 
 this would give good results. Alas, it does not:
+
+![Tech mapping for Vivado's one-hot mux with don't cares](/images/test_mux_4.png)
 
 I don't even know what logic function this is implementing. It is using 12 LUTs, 3 deep, to implement something it could 
 be doing in 3 LUTs, 2 deep. The same code for a 16-way mux uses 44 LUTs, 5 deep!
@@ -327,11 +331,11 @@ don't care after the loop when this happens:
 ```
 
 This synthesizes a lot better, for some reason. We end up using 5 LUTs, 2 deep for an 8-way mux and 11 LUTs, 3 deep 
-for a 16-way mux. Neither of these are optimal, but they are as terrible as the two previous attempts.
+for a 16-way mux. Neither of these are optimal, but they are not as terrible as the two previous attempts.
 
 And that's where I get stuck. I can't think of a generic way to specify only one-hot cases that Vivado manages to use
 efficiently. So, for this case of one-hot mux I would fall back on the manual logic specification and know that I will
-get good results, but for the general case of generic code with lots of don't care cases I don't have an easy and 
+get decent results, but for the general case of generic code with lots of don't care cases I don't have an easy and 
 effective strategy.
 
 Perhaps other tools work better than Vivado here. I'd like to try the same things in Yosys, especially considering that
